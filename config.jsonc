@@ -1,0 +1,166 @@
+//-*- mode: jsonc -*-
+{
+  "output": "DP-2",
+  "layer": "top", 
+  "position": "top", 
+  "height": 30, 
+  "spacing": 4, 
+
+  // Choose the order of the modules
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/sep",
+    "hyprland/window",
+    "custom/sep",
+  ],
+
+  "modules-right": [
+    "wireplumber#output",
+    "custom/sep",
+    "wireplumber#input",
+    "custom/sep",
+    "network",
+    "custom/sep",
+    "cpu",
+    "custom/sep",
+    "memory",
+    "custom/sep",
+    "clock",
+    "custom/sep",
+  ],
+
+  // Modules configuration
+  "hyprland/workspaces": {
+    "disable-scroll": true, 
+    "sort-by-number": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}",
+    "on-click": "activate",
+    "persistent-only": true,
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [],
+    }
+  },
+"hyprland/window": {
+	"format": "{}",
+	"rewrite": {
+		"(.*) Firefox": "Firefox",
+		"(.*) Chromium": "Chromium",
+		"Spotify Premium": "Spotify",
+	}
+},
+  "wireplumber#output": {
+    "tooltip": false,
+    "scroll-step": 5,
+    "format": "Vol: {volume}%",
+    "format-muted": "Vol: {volume}%",
+    "on-click":"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
+  },
+  "wireplumber#input": {
+    "tooltip": false,
+    "node-type": "Audio/Source",
+    "scroll-step": 5,
+    "format": "Mic: 󰍬",
+    "format-muted": "Mic: 󰍭",
+    "on-click":"wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+    "format-disconnected": "Disconnected ",
+    // "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+    "format-stopped": "",
+    "interval": 10,
+    "consume-icons": {
+        "on": " " // Icon shows only when "consume" is on
+    },
+    "random-icons": {
+       // "off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
+        "on": " "
+    },
+    "repeat-icons": {
+        "on": " "
+    },
+    "single-icons": {
+        "on": "1 "
+    },
+    "state-icons": {
+        "paused": "",
+        "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)",
+    "on-click": "rmpc togglepause",
+    "on-click-right": "rmpc stop"
+  }, 
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "interval": 1,
+    "dynamic-len": 50,
+    "player-icons": {
+      "default": "",
+      "vlc": "󰝚",
+      "firefox": ""
+    },
+    "status-icons": {
+      "paused": ""
+    },
+    "on-click": "playerctl play-pause"
+  },
+  "tray": {
+      // "icon-size": 21,
+      "spacing": 10
+      // "icons": {
+      //   "blueman": "bluetooth",
+      //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
+      // }
+  },
+  "clock": {
+    "format-alt": "{:%Y-%m-%d}",
+    "format": "{:%I:%M}" 
+  },
+  "cpu": {
+      "format": "CPU: {usage}%",
+      "tooltip": false
+  },
+  "memory": {
+      "format": "Mem: {used}GiB"
+  },
+  "disk": {
+      "interval": 60,
+      "path": "/",
+      "format": "Disk: {free}"
+  },
+  "battery": {
+      "states": {
+          "good": 95,
+          "warning": 30,
+          "critical": 15
+      },
+      "format": "Bat: {capacity}% {icon} {time}",
+      "format-plugged": "{capacity}% ",
+      "format-alt": "Bat {capacity}%",
+      "format-time": "{H}:{M}",
+      "format-icons": ["", "", "", "", ""]
+  },
+  "network": {
+      "format": "Online",
+      "format-disconnected": "Disconnected ⚠"
+  },
+  "custom/sep": {
+      "format" : "|",
+      "interval" : 0
+  }
+}
